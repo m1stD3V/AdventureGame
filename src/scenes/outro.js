@@ -3,6 +3,7 @@ class Outro extends Phaser.Scene {
 
     preload() {
         this.load.image('outro_bg', 'assets/visuals/gate.png');
+        this.load.audio('click', 'assets/sfx/click.mp3');
     }
 
     create() {
@@ -38,6 +39,7 @@ class Outro extends Phaser.Scene {
             .setStroke('#000', 4);
 
         this.input.on('pointerdown', () => {
+            this.sound.play('click', { volume: 0.5 });
             this.cameras.main.fade(1000, 0, 0, 0);
             this.time.delayedCall(1000, () => this.scene.start('intro'));
         });

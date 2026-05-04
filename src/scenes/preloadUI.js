@@ -5,4 +5,5 @@ function preloadUI(scene) {
     scene.load.image('ball', 'assets/visuals/ball.png');
     scene.load.image('stud', 'assets/visuals/stud.png');
     scene.load.image('return', 'assets/visuals/return.png');
+    scene.load.audio('click', 'assets/sfx/click.mp3');
 }

@@ -94,6 +94,13 @@ class AdventureScene extends Phaser.Scene {
     }
 
     /**
+     * Play the common interaction sound effect.
+     */
+    playClick() {
+        this.sound.play('click', { volume: 0.5 });
+    }
+
+    /**
      * Briefly flash a message in the UI message box. The message fades out
      * over a few seconds.
      *
@@ -138,6 +145,7 @@ class AdventureScene extends Phaser.Scene {
                 btn.setStyle({ color: '#fff' });
             })
             .on('pointerdown', () => {
+                this.playClick();
                 const roll = Phaser.Math.Between(1, 20);
 
                 this.tweens.add({
@@ -215,6 +223,7 @@ class AdventureScene extends Phaser.Scene {
             console.warn('gaining item already held:', item);
             return;
         }
+        this.playClick();
         this.inventory.push(item);
         this.updateInventory();
         for (let text of this.inventoryTexts) {
@@ -241,6 +250,7 @@ class AdventureScene extends Phaser.Scene {
             console.warn('losing item not held:', item);
             return;
         }
+        this.playClick();
         for (let text of this.inventoryTexts) {
             if (text.text == item) {
                 this.tweens.add({
@@ -265,6 +275,7 @@ class AdventureScene extends Phaser.Scene {
      * @param {string} key The Phaser scene key of the destination scene.
      */
     gotoScene(key) {
+        this.playClick();
         this.cameras.main.fade(this.transitionDuration, 0, 0, 0);
         this.time.delayedCall(this.transitionDuration, () => {
             this.scene.start(key, { inventory: this.inventory });
