@@ -60,6 +60,11 @@ class AdventureScene extends Phaser.Scene {
             .setStyle({ fontSize: `${3 * this.s}px` })
             .setWordWrapWidth(this.w * 0.25 - 2 * this.s);
 
+        // Change 1: descriptionBox for persistent scene-setting text
+        this.descriptionBox = this.add.text(this.w * 0.75 + this.s, this.h * 0.12)
+            .setStyle({ fontSize: `${1.75 * this.s}px`, color: '#aaa' })
+            .setWordWrapWidth(this.w * 0.25 - 2 * this.s);
+
         this.messageBox = this.add.text(this.w * 0.75 + this.s, this.h * 0.33)
             .setStyle({ fontSize: `${2 * this.s}px`, color: '#eea' })
             .setWordWrapWidth(this.w * 0.25 - 2 * this.s);
@@ -102,6 +107,58 @@ class AdventureScene extends Phaser.Scene {
             easing: 'Quintic.in',
             duration: 4 * this.transitionDuration
         });
+    }
+
+    // Change 2: setDescription() — sets persistent scene description text in the panel
+    setDescription(text) {
+        this.descriptionBox.setText(text);
+        this.tweens.add({
+            targets: this.descriptionBox,
+            alpha: { from: 0, to: 1 },
+            ease: 'Cubic.out',
+            duration: this.transitionDuration
+        });
+    }
+
+    // Change 3: addRollTrigger() — places a clickable d20 roll button in the game area
+    addRollTrigger(x, y, label, dc, onSuccess, onFail) {
+        const defaultFail = (roll) => {
+            this.showMessage(`🎲 Rolled ${roll} — not enough. (DC ${dc})`);
+        };
+        const failCallback = onFail || defaultFail;
+
+        const btn = this.add.text(x, y, `🎲 ${label} (DC ${dc})`)
+            .setFontSize(this.s * 2)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => {
+                btn.setStyle({ color: '#ffe' });
+                this.showMessage(`Roll a d20 to ${label}. Need ${dc}+.`);
+            })
+            .on('pointerout', () => {
+                btn.setStyle({ color: '#fff' });
+            })
+            .on('pointerdown', () => {
+                const roll = Phaser.Math.Between(1, 20);
+
+                this.tweens.add({
+                    targets: btn,
+                    angle: { from: -4, to: 4 },
+                    repeat: 3,
+                    yoyo: true,
+                    ease: 'Sine.inOut',
+                    duration: 60,
+                    onComplete: () => btn.setAngle(0)
+                });
+
+                if (roll >= dc) {
+                    this.showMessage(`🎲 Rolled ${roll} — success! (DC ${dc})`);
+                    onSuccess(roll);
+                } else {
+                    failCallback(roll);
+                }
+            });
+
+        return btn;
     }
 
     /**
