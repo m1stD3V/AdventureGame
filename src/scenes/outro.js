@@ -41,7 +41,7 @@ class Outro extends Phaser.Scene {
         this.input.on('pointerdown', () => {
             this.sound.play('click', { volume: 0.5 });
             this.cameras.main.fade(1000, 0, 0, 0);
-            this.time.delayedCall(1000, () => this.scene.start('intro'));
+            this.time.delayedCall(1000, () => this.scene.start('intro', { inventory: [] }));
         });
     }
 }

@@ -1,6 +1,10 @@
 class Intro extends Phaser.Scene {
     constructor() { super('intro'); }
 
+    init(data) {
+        this.inventory = data?.inventory || [];
+    }
+
     preload() {
         this.load.image('intro_bg', 'assets/visuals/intro.png');
         this.load.audio('bg_music', 'assets/sfx/bg.mp3');
@@ -21,10 +25,6 @@ class Intro extends Phaser.Scene {
 
         if (!this.sound.get('bg_music')) {
             const bgMusic = this.sound.add('bg_music', { volume: 0.1, loop: true });
-            
-            // For large files, we might want to check if it's HTML5 Audio or Web Audio
-            // In Phaser 3, you can force HTML5 audio by passing { html5: true } to sound.add
-            // or by using the loader with a specific config.
             
             bgMusic.play();
             console.log("Background music added and play() called.");
@@ -50,7 +50,7 @@ class Intro extends Phaser.Scene {
             }
             this.sound.play('click', { volume: 0.5 });
             this.cameras.main.fade(1000, 0, 0, 0);
-            this.time.delayedCall(1000, () => this.scene.start('foyer'));
+            this.time.delayedCall(1000, () => this.scene.start('foyer', { inventory: this.inventory }));
         });
     }
 }

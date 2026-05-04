@@ -23,7 +23,7 @@ class AdventureScene extends Phaser.Scene {
      * @param {{inventory?: string[]}} data
      */
     init(data) {
-        this.inventory = data.inventory || [];
+        this.inventory = data?.inventory || [];
     }
 
     /**
