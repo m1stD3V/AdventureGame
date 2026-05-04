@@ -1,22 +1,45 @@
-A simple adventure game by {who?} based on a simple adventure game engine by [Adam Smith](https://github.com/rndmcnlly).
+# Ashwood Manor: A Gothic Mystery
+I created this simple adventure game as an exploration of atmospheric storytelling using a customized adventure engine.
 
-Code requirements:
-- **4+ scenes based on `AdventureScene`**: unsatisfied (name at least 4 of the classes).
-- **2+ scenes *not* based on `AdventureScene`**: unsatisfied (name the classes).
-- **2+ methods or other enhancement added to the adventure game engine to simplify my scenes**:
-    - Enhancement 1: unsatisfied (name the method and explain the use of it).
-    - Enhancement 2: unsatisfied (name the method and explain the use of it).
+## Code Requirements
+- **4+ scenes based on `AdventureScene`**: I implemented five main locations that extend the core `AdventureScene` class:
+    - `Foyer` (in `src/scenes/foyer.js`)
+    - `Library` (in `src/scenes/library.js`)
+    - `Cellar` (in `src/scenes/cellar.js`)
+    - `Ballroom` (in `src/scenes/ballroom.js`)
+    - `Study` (in `src/scenes/study.js`)
+- **2+ scenes *not* based on `AdventureScene`**: I built the introductory and concluding experiences directly on `Phaser.Scene`:
+    - `Intro` (in `src/scenes/intro.js`): Handles asset loading, audio context initialization, and the title screen.
+    - `Outro` (in `src/scenes/outro.js`): Provides the game's resolution and restart logic.
+- **2+ methods or other enhancement added to the adventure game engine**:
+    - `addRollTrigger(x, y, label, dc, onSuccess, onFail)`: I added this method to `AdventureScene` (in `src/adventure.js`) to allow for skill-check based interactions. It includes a shaking animation for the button and handles success/failure callbacks based on a random d20 roll.
+    - `setDescription(text)`: I enhanced the engine with this method to manage persistent scene descriptions. It includes a smooth fade-in tween to ensure transitions between room descriptions feel polished.
 
-Experience requirements:
-- **4+ locations in the game world**: unsatisfied (name at least 4 of the classes).
-- **2+ interactive objects in most scenes**: unsatisfied (describe two examples)
-- **Many objects have `pointerover` messages**: unsatisfied (describe two examples)
-- **Many objects have `pointerdown` effects**: unsatisfied (describe two examples)
-- **Some objects are themselves animated**: unsatisfied (describe two examples)
+## Experience Requirements
+- **4+ locations in the game world**: I designed five distinct areas for the player to explore: the `Foyer`, `Library`, `Cellar`, `Ballroom`, and `Study`.
+- **2+ interactive objects in most scenes**: I populated each room with multiple points of interest. For example:
+    - In the **Library**, players can interact with the `bookshelf` or use a roll to `Investigate dusty corner`.
+    - In the **Cellar**, players can check the `wine rack`, pry open a `wooden crate`, or `Examine loose stone`.
+- **Many objects have `pointerover` messages**: I used the `showMessage` system to provide feedback when players hover over objects. Examples include:
+    - "A rusted chandelier." in the Foyer.
+    - "Hundreds of volumes." in the Library.
+    - "It plays a waltz." for the phonograph in the Ballroom.
+- **Many objects have `pointerdown` effects**: I implemented various outcomes for clicking objects:
+    - **Item Gain**: Clicking the crate in the Cellar with a crowbar grants the `manor key`.
+    - **Scene Navigation**: Clicking room icons in the Foyer transitions the player to new locations.
+    - **Dice Rolls**: Clicking the `Search the desk` button in the Study triggers a chance-based search.
+- **Some objects are themselves animated**: I used tweens to make the interface and objects feel reactive:
+    - The **Roll Buttons** (created via `addRollTrigger`) perform a shaking rotation animation when clicked.
+    - **Inventory Items** slide and fade into view when gained, and slide away when lost.
+    - **UI Elements** like the message box and description box use alpha tweens to fade in and out.
 
-Asset sources:
-- (For each image/audio/video asset used, describe how it was created. What tool did you use to create it? Was it based on another work? If so, how did you change it, and where can we learn more about the original work for comparison? Use [Markdown link syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#links).)
+## Asset Sources
+- **Visuals**: All background images (e.g., `foyer.png`, `library.png`) were generated using AI-assisted digital painting tools (Midjourney) and edited in Photoshop to ensure consistent lighting and scale. The UI icons like `question.png` and room icons were custom-made to fit the gothic aesthetic.
+- **Audio**:
+    - `bg.mp3`: A loopable ambient track sourced from public domain horror soundscapes and edited for duration.
+    - `click.mp3`: A custom-recorded UI sound effect of a physical switch.
 
-Code sources:
-- `adventure.js` and `index.html` were created for this project [Adam Smith](https://github.com/rndmcnlly) and edited by me.
-- `game.js` was sketched by [Adam Smith](https://github.com/rndmcnlly) and rewritten by me.
+## Code Sources
+- `adventure.js` and `index.html` were originally provided by [Adam Smith](https://github.com/rndmcnlly) and significantly extended by me with new interaction methods and UI refinements.
+- `game.js` was rewritten by me to configure the specific scenes and scale settings for Ashwood Manor.
+- All scene files in `src/scenes/` were authored by me to implement the specific logic and layout of the game.
