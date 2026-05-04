@@ -34,7 +34,7 @@ class Ballroom extends AdventureScene {
         createInteractable(this.w * 0.52, this.h * 0.15, '🎵 phonograph', 'It plays a waltz.', () => this.showMessage('Silence.'));
         createInteractable(this.w * 0.2, this.h * 0.3, '🪞 cracked mirror', 'You look tired.', () => this.showMessage('The reflection flickers.'));
         
-        // INVESTIGATION ROLL
+        // I trigger a roll to investigate the floorboards.
         this.addRollTrigger(this.w * 0.6, this.h * 0.45, 'Check floorboards', 14, () => {
             this.showMessage('You find a tarnished ring wedged between the boards!');
             this.gainItem('tarnished ring');

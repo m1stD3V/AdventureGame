@@ -33,7 +33,7 @@ class Cellar extends AdventureScene {
 
         createInteractable(this.w * 0.08, this.h * 0.2, '🍷 wine rack', 'Rows of bottles.', () => this.gainItem('old wine'));
         
-        // KEY LOGIC
+        // I handle the logic for finding the key in the crate.
         createInteractable(this.w * 0.4, this.h * 0.4, '📦 wooden crate', 'It is nailed shut.', () => {
             if (this.hasItem('manor key')) {
                 this.showMessage('The crate is empty.');
@@ -45,7 +45,7 @@ class Cellar extends AdventureScene {
             }
         });
 
-        // INVESTIGATION ROLL
+        // I trigger a roll to examine the loose stone for secrets.
         this.addRollTrigger(this.w * 0.1, this.h * 0.6, 'Examine loose stone', 15, () => {
             this.showMessage('You find a hidden compartment containing a silver coin!');
             this.gainItem('silver coin');

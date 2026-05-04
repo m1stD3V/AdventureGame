@@ -14,7 +14,7 @@ class Foyer extends AdventureScene {
     onEnter() {
         this.setDescription('A grand entrance hall.');
 
-        // Helper to place icon perfectly next to text
+        // I use this helper to place icons perfectly next to text.
         const createInteractable = (x, y, text, msg, onDown) => {
             const t = this.add.text(x, y, text).setFontSize(this.s * 2);
             const b = t.getBounds();
@@ -28,7 +28,7 @@ class Foyer extends AdventureScene {
 
         createInteractable(this.w * 0.35, this.h * 0.08, '🕯️ chandelier', 'A rusted chandelier.', () => this.showMessage('It sways.'));
         
-        // EXIT LOGIC
+        // I handle the exit logic for the main gate.
         createInteractable(this.w * 0.55, this.h * 0.35, '🚪 main gate', 'The way out. It is locked tight.', () => {
             if (this.hasItem('manor key')) {
                 this.showMessage('The key turns smoothly in the lock...');
@@ -38,7 +38,7 @@ class Foyer extends AdventureScene {
             }
         });
 
-        // Navigation buttons
+        // I set up the navigation buttons for other rooms.
         const passages = [
             { key: 'lib', label: 'Library', scene: 'library', x: 0.1, y: 0.65 },
             { key: 'cel', label: 'Cellar', scene: 'cellar', x: 0.3, y: 0.65 },

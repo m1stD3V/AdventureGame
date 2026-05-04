@@ -1,3 +1,4 @@
+// I manage the intro scene where I load assets and start the background music.
 class Intro extends Phaser.Scene {
     constructor() { super('intro'); }
 

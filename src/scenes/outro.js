@@ -1,3 +1,4 @@
+// I manage the outro scene where I show the final messages and handle the game restart.
 class Outro extends Phaser.Scene {
     constructor() { super('outro'); }
 

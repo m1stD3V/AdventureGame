@@ -1,3 +1,4 @@
+// I configure and start my adventure game.
 const game = new Phaser.Game({
     scale: {
         mode: Phaser.Scale.FIT,

@@ -12,7 +12,7 @@ class Library extends AdventureScene {
     }
 
     onEnter() {
-        this.setDescription('Floor-to-ceiling shelves filled with forgotten knowledge.');
+        this.setDescription('Floor to ceiling shelves filled with forgotten knowledge.');
         
         this.add.image(this.w * 0.05, this.h * 0.88, 'return')
             .setScale(0.4)
@@ -33,7 +33,7 @@ class Library extends AdventureScene {
 
         createInteractable(this.w * 0.08, this.h * 0.15, '📚 bookshelf', 'Hundreds of volumes.', () => this.showMessage('One book falls open to a page about "Manor Secrets".'));
         
-        // CROWBAR LOGIC with Roll
+        // I handle the crowbar logic with a roll.
         this.addRollTrigger(this.w * 0.45, this.h * 0.25, 'Investigate dusty corner', 10, () => {
             if (this.hasItem('crowbar')) {
                 this.showMessage('You already found everything here.');
@@ -43,7 +43,7 @@ class Library extends AdventureScene {
             }
         });
 
-        // Extra content
+        // I add some extra interactable content to the library.
         createInteractable(this.w * 0.1, this.h * 0.4, '🪜 ladder', 'An old sliding ladder.', () => this.showMessage('It creaks ominously.'));
     }
 }

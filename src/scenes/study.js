@@ -12,7 +12,7 @@ class Study extends AdventureScene {
     }
 
     onEnter() {
-        this.setDescription('A cluttered study filled with half-finished letters.');
+        this.setDescription('A cluttered study filled with half finished letters.');
 
         this.add.image(this.w * 0.05, this.h * 0.88, 'return')
             .setScale(0.4)
@@ -31,7 +31,7 @@ class Study extends AdventureScene {
                 .on('pointerdown', onDown);
         };
 
-        // DESK LOGIC with Roll
+        // I handle the desk logic with a roll.
         this.addRollTrigger(this.w * 0.28, this.h * 0.2, 'Search the desk', 12, () => {
             if (this.hasItem('letter')) {
                 this.showMessage('You have the letter.');
@@ -43,7 +43,7 @@ class Study extends AdventureScene {
 
         createInteractable(this.w * 0.1, this.h * 0.45, '🕯️ candle', 'Nearly spent.', () => this.showMessage('The flame is blue.'));
         
-        // Extra content
+        // I add some extra interactable content to the study.
         createInteractable(this.w * 0.5, this.h * 0.5, '🗝️ small chest', 'It is locked.', () => this.showMessage('A tiny keyhole stares back.'));
     }
 }
