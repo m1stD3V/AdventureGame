@@ -6,6 +6,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
+    parent: "root",
     scene: [Intro, Foyer, Library, Cellar, Ballroom, Study, Outro],
     title: 'Ashwood Manor',
     backgroundColor: '#111'

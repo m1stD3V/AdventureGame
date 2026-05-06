@@ -53,7 +53,7 @@ class Foyer extends AdventureScene {
                 .setInteractive({ useHandCursor: true })
                 .on('pointerdown', () => this.gotoScene(p.scene));
             
-            this.add.text(this.w * p.x, this.h * p.y + 60, p.label)
+            this.add.text(this.w * p.x, this.h * p.y + 60, `➜ ${p.label}`)
                 .setFontSize(this.s * 1.5)
                 .setOrigin(0.5, 0);
         });

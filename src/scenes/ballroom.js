@@ -20,6 +20,9 @@ class Ballroom extends AdventureScene {
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => this.gotoScene('foyer'));
 
+        this.add.text(this.w * 0.05 + 140, this.h * 0.88 + 15, '⬅️ Return')
+            .setFontSize(this.s * 1.5);
+
         const createInteractable = (x, y, text, msg, onDown) => {
             const t = this.add.text(x, y, text).setFontSize(this.s * 2);
             const b = t.getBounds();
