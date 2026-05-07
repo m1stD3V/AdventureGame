@@ -1,5 +1,5 @@
 class Library extends AdventureScene {
-    constructor() { super('library', 'The Library'); }
+    constructor() { super('library'); }
 
     preload() {
         this.load.image('library_bg', 'assets/visuals/library.png');
@@ -12,7 +12,7 @@ class Library extends AdventureScene {
     }
 
     onEnter() {
-        this.setDescription('Floor to ceiling shelves filled with forgotten knowledge.');
+        this.setDescription(this.sceneData.description);
         
         this.add.image(this.w * 0.05, this.h * 0.88, 'return')
             .setScale(0.4)
@@ -20,33 +20,22 @@ class Library extends AdventureScene {
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => this.gotoScene('foyer'));
 
-        this.add.text(this.w * 0.05 + 140, this.h * 0.88 + 15, '⬅️ Return')
+        this.add.text(this.w * 0.05 + 140, this.h * 0.88 + 15, this.getCommonText('return'))
             .setFontSize(this.s * 1.5);
 
-        const createInteractable = (x, y, text, msg, onDown) => {
-            const t = this.add.text(x, y, text).setFontSize(this.s * 2);
-            const b = t.getBounds();
-            this.add.image(b.right + 20, b.centerY, 'question')
-                .setScale(0.2)
-                .setOrigin(0, 0.5)
-                .setInteractive({ useHandCursor: true })
-                .on('pointerover', () => this.showMessage(msg))
-                .on('pointerdown', onDown);
-        };
-
-        createInteractable(this.w * 0.08, this.h * 0.15, '📚 bookshelf', 'Hundreds of volumes.', () => this.showMessage('One book falls open to a page about "Manor Secrets".'));
+        this.addInteractable(this.w * 0.08, this.h * 0.15, 'bookshelf', () => this.showMessage(this.getInteractableText('bookshelf', 'click')));
         
         // I handle the crowbar logic with a roll.
-        this.addRollTrigger(this.w * 0.45, this.h * 0.25, 'Investigate dusty corner', 10, () => {
+        this.addRollTrigger(this.w * 0.45, this.h * 0.25, this.getInteractableText('dustyCorner', 'label'), 10, () => {
             if (this.hasItem('crowbar')) {
-                this.showMessage('You already found everything here.');
+                this.showMessage(this.getInteractableText('dustyCorner', 'alreadyFound'));
             } else {
                 this.gainItem('crowbar');
-                this.showMessage('Success! You uncover a heavy crowbar under the floorboards.');
+                this.showMessage(this.getInteractableText('dustyCorner', 'success'));
             }
         });
 
         // I add some extra interactable content to the library.
-        createInteractable(this.w * 0.1, this.h * 0.4, '🪜 ladder', 'An old sliding ladder.', () => this.showMessage('It creaks ominously.'));
+        this.addInteractable(this.w * 0.1, this.h * 0.4, 'ladder', () => this.showMessage(this.getInteractableText('ladder', 'click')));
     }
 }

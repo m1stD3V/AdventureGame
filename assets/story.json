@@ -1,0 +1,133 @@
+{
+  "foyer": {
+    "name": "The Foyer",
+    "description": "A grand entrance hall.",
+    "interactables": {
+      "chandelier": {
+        "label": "🕯️ chandelier",
+        "message": "A rusted chandelier.",
+        "click": "It sways."
+      },
+      "gate": {
+        "label": "🚪 main gate",
+        "message": "The way out. It is locked tight.",
+        "success": "The key turns smoothly in the lock...",
+        "fail": "I need a key to unlock this gate."
+      }
+    },
+    "passages": {
+      "library": "Library",
+      "cellar": "Cellar",
+      "ballroom": "Ballroom",
+      "study": "Study"
+    }
+  },
+  "library": {
+    "name": "The Library",
+    "description": "Floor to ceiling shelves filled with forgotten knowledge.",
+    "interactables": {
+      "bookshelf": {
+        "label": "📚 bookshelf",
+        "message": "Hundreds of volumes.",
+        "click": "One book falls open to a page about \"Manor Secrets\"."
+      },
+      "dustyCorner": {
+        "label": "Investigate dusty corner",
+        "hover": "Roll a d20 to Investigate dusty corner. Need 10+.",
+        "success": "Success! You uncover a heavy crowbar under the floorboards.",
+        "alreadyFound": "You already found everything here."
+      },
+      "ladder": {
+        "label": "🪜 ladder",
+        "message": "An old sliding ladder.",
+        "click": "It creaks ominously."
+      }
+    }
+  },
+  "cellar": {
+    "name": "The Cellar",
+    "description": "Cold, damp stone and the smell of ancient dust.",
+    "interactables": {
+      "wineRack": {
+        "label": "🍷 wine rack",
+        "message": "Rows of bottles."
+      },
+      "crate": {
+        "label": "📦 wooden crate",
+        "message": "It is nailed shut.",
+        "empty": "The crate is empty.",
+        "success": "You pry it open and find the manor key!",
+        "fail": "It is nailed shut. I need a tool to pry it open."
+      },
+      "looseStone": {
+        "label": "Examine loose stone",
+        "success": "You find a hidden compartment containing a silver coin!"
+      },
+      "webs": {
+        "label": "🕸️ thick webs",
+        "message": "Something is behind them.",
+        "click": "It looks like a small door."
+      }
+    }
+  },
+  "ballroom": {
+    "name": "The Ballroom",
+    "description": "A warped, dusty ballroom. You can almost hear the echoes of music.",
+    "interactables": {
+      "phonograph": {
+        "label": "🎵 phonograph",
+        "message": "It plays a waltz.",
+        "click": "Silence."
+      },
+      "mirror": {
+        "label": "🪞 cracked mirror",
+        "message": "You look tired.",
+        "click": "The reflection flickers."
+      },
+      "floorboards": {
+        "label": "Check floorboards",
+        "success": "You find a tarnished ring wedged between the boards!"
+      },
+      "violin": {
+        "label": "🎻 broken violin",
+        "message": "Its strings are snapped.",
+        "click": "A sad sight."
+      }
+    }
+  },
+  "study": {
+    "name": "The Study",
+    "description": "A cluttered study filled with half finished letters.",
+    "interactables": {
+      "desk": {
+        "label": "Search the desk",
+        "success": "You find a cryptic letter hidden in a secret compartment!",
+        "alreadyFound": "You have the letter."
+      },
+      "candle": {
+        "label": "🕯️ candle",
+        "message": "Nearly spent.",
+        "click": "The flame is blue."
+      },
+      "chest": {
+        "label": "🗝️ small chest",
+        "message": "It is locked.",
+        "click": "A tiny keyhole stares back."
+      }
+    }
+  },
+  "outro": {
+    "line1": "You leave Ashwood Manor behind.",
+    "line2": "But something follows you out.",
+    "line3": "Click to return to the beginning."
+  },
+  "common": {
+    "return": "⬅️ Return",
+    "inventory": "Inventory",
+    "loading": "Loading: ",
+    "fullscreen": "Fullscreen?",
+    "rollResultFail": "🎲 Rolled {roll} — not enough. (DC {dc})",
+    "rollResultSuccess": "🎲 Rolled {roll} — success! (DC {dc})",
+    "rollInstruction": "Roll a d20 to {label}. Need {dc}+."
+  }
+}

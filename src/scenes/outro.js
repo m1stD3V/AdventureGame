@@ -8,6 +8,9 @@ class Outro extends Phaser.Scene {
     }
 
     create() {
+        const story = this.cache.json.get('story');
+        const outroData = story.outro;
+
         const w = this.game.config.width;
         const h = this.game.config.height;
         const s = w * 0.01;
@@ -21,19 +24,19 @@ class Outro extends Phaser.Scene {
             .setFontSize(s * 8)
             .setOrigin(0.5);
 
-        this.add.text(w * 0.5, h * 0.5, 'You leave Ashwood Manor behind.')
+        this.add.text(w * 0.5, h * 0.5, outroData.line1)
             .setFontSize(s * 3)
             .setOrigin(0.5)
             .setColor('#c8a96e')
             .setStroke('#000', 6);
 
-        this.add.text(w * 0.5, h * 0.62, 'But something follows you out.')
+        this.add.text(w * 0.5, h * 0.62, outroData.line2)
             .setFontSize(s * 2)
             .setOrigin(0.5)
             .setColor('#fff')
             .setStroke('#000', 4);
 
-        this.add.text(w * 0.5, h * 0.76, 'Click to return to the beginning.')
+        this.add.text(w * 0.5, h * 0.76, outroData.line3)
             .setFontSize(s * 1.8)
             .setOrigin(0.5)
             .setColor('#fff')

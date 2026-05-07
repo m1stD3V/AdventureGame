@@ -7,14 +7,19 @@ class AdventureScene extends Phaser.Scene {
         this.inventory = data?.inventory || [];
     }
 
-    // I set the unique scene key and the name shown in the UI.
-    constructor(key, name) {
+    // I set the unique scene key and fetch my name from the story data.
+    constructor(key) {
         super(key);
-        this.name = name;
+        this.key = key;
     }
 
     // I create the UI and call my onEnter method.
     create() {
+        // I fetch the story data from the cache.
+        this.storyData = this.cache.json.get('story');
+        this.sceneData = this.storyData[this.key];
+        this.name = this.sceneData?.name || this.key;
+
         // I set the duration for scene transitions.
         this.transitionDuration = 1000;
 
@@ -43,7 +48,7 @@ class AdventureScene extends Phaser.Scene {
 
         this.inventoryBanner = this.add.text(this.w * 0.75 + this.s, this.h * 0.66)
             .setStyle({ fontSize: `${2 * this.s}px` })
-            .setText("Inventory")
+            .setText(this.getCommonText('inventory', 'Inventory'))
             .setAlpha(0);
 
         this.inventoryTexts = [];
@@ -52,7 +57,7 @@ class AdventureScene extends Phaser.Scene {
         this.add.text(this.w-3*this.s, this.h-3*this.s, "📺")
             .setStyle({ fontSize: `${2 * this.s}px` })
             .setInteractive({useHandCursor: true})
-            .on('pointerover', () => this.showMessage('Fullscreen?'))
+            .on('pointerover', () => this.showMessage(this.getCommonText('fullscreen', 'Fullscreen?')))
             .on('pointerdown', () => {
                 if (this.scale.isFullscreen) {
                     this.scale.stopFullscreen();
@@ -63,6 +68,31 @@ class AdventureScene extends Phaser.Scene {
 
         this.onEnter();
 
+    }
+
+    // I fetch a string from the common story data.
+    getCommonText(key, fallback = '') {
+        return this.storyData?.common?.[key] || fallback;
+    }
+
+    // I fetch a string for an interactable in the current scene.
+    getInteractableText(id, key, fallback = '') {
+        return this.sceneData?.interactables?.[id]?.[key] || fallback;
+    }
+
+    // I add a standard interactable object with a question mark icon.
+    addInteractable(x, y, id, onDown) {
+        const label = this.getInteractableText(id, 'label', id);
+        const msg = this.getInteractableText(id, 'message', '');
+        const t = this.add.text(x, y, label).setFontSize(this.s * 2);
+        const b = t.getBounds();
+        this.add.image(b.right + 20, b.centerY, 'question')
+            .setScale(0.2)
+            .setOrigin(0, 0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => this.showMessage(msg))
+            .on('pointerdown', onDown);
+        return t;
     }
 
     // I play a sound when I click on something.
@@ -94,8 +124,13 @@ class AdventureScene extends Phaser.Scene {
 
     // I add a button that triggers a dice roll for an action.
     addRollTrigger(x, y, label, dc, onSuccess, onFail) {
+        const failTemplate = this.getCommonText('rollResultFail', '🎲 Rolled {roll} — not enough. (DC {dc})');
+        const successTemplate = this.getCommonText('rollResultSuccess', '🎲 Rolled {roll} — success! (DC {dc})');
+        const instructionTemplate = this.getCommonText('rollInstruction', 'Roll a d20 to {label}. Need {dc}+.');
+
         const defaultFail = (roll) => {
-            this.showMessage(`🎲 Rolled ${roll} — not enough. (DC ${dc})`);
+            const msg = failTemplate.replace('{roll}', roll).replace('{dc}', dc);
+            this.showMessage(msg);
         };
         const failCallback = onFail || defaultFail;
 
@@ -104,7 +139,8 @@ class AdventureScene extends Phaser.Scene {
             .setInteractive({ useHandCursor: true })
             .on('pointerover', () => {
                 btn.setStyle({ color: '#ffe' });
-                this.showMessage(`Roll a d20 to ${label}. Need ${dc}+.`);
+                const msg = instructionTemplate.replace('{label}', label).replace('{dc}', dc);
+                this.showMessage(msg);
             })
             .on('pointerout', () => {
                 btn.setStyle({ color: '#fff' });
@@ -124,7 +160,8 @@ class AdventureScene extends Phaser.Scene {
                 });
 
                 if (roll >= dc) {
-                    this.showMessage(`🎲 Rolled ${roll} — success! (DC ${dc})`);
+                    const msg = successTemplate.replace('{roll}', roll).replace('{dc}', dc);
+                    this.showMessage(msg);
                     onSuccess(roll);
                 } else {
                     failCallback(roll);

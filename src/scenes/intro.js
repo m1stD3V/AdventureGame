@@ -10,10 +10,13 @@ class Intro extends Phaser.Scene {
         this.load.image('intro_bg', 'assets/visuals/intro.png');
         this.load.audio('bg_music', 'assets/sfx/bg.mp3');
         this.load.audio('click', 'assets/sfx/click.mp3');
+        this.load.json('story', 'assets/story.json');
 
         let loadingText = this.add.text(this.game.config.width / 2, this.game.config.height / 2, 'Loading...', { fontSize: '32px', fill: '#fff' }).setOrigin(0.5);
         this.load.on('progress', (value) => {
-            loadingText.setText('Loading: ' + Math.floor(value * 100) + '%');
+            const story = this.cache.json.get('story');
+            const loadingPrefix = story?.common?.loading || 'Loading: ';
+            loadingText.setText(loadingPrefix + Math.floor(value * 100) + '%');
         });
         this.load.on('complete', () => {
             loadingText.destroy();

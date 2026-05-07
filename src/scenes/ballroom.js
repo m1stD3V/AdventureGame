@@ -1,5 +1,5 @@
 class Ballroom extends AdventureScene {
-    constructor() { super('ballroom', 'The Ballroom'); }
+    constructor() { super('ballroom'); }
 
     preload() {
         this.load.image('ballroom_bg', 'assets/visuals/ballroom.png');
@@ -12,7 +12,7 @@ class Ballroom extends AdventureScene {
     }
 
     onEnter() {
-        this.setDescription('A warped, dusty ballroom. You can almost hear the echoes of music.');
+        this.setDescription(this.sceneData.description);
 
         this.add.image(this.w * 0.05, this.h * 0.88, 'return')
             .setScale(0.4)
@@ -20,29 +20,18 @@ class Ballroom extends AdventureScene {
             .setInteractive({ useHandCursor: true })
             .on('pointerdown', () => this.gotoScene('foyer'));
 
-        this.add.text(this.w * 0.05 + 140, this.h * 0.88 + 15, '⬅️ Return')
+        this.add.text(this.w * 0.05 + 140, this.h * 0.88 + 15, this.getCommonText('return'))
             .setFontSize(this.s * 1.5);
 
-        const createInteractable = (x, y, text, msg, onDown) => {
-            const t = this.add.text(x, y, text).setFontSize(this.s * 2);
-            const b = t.getBounds();
-            this.add.image(b.right + 20, b.centerY, 'question')
-                .setScale(0.2)
-                .setOrigin(0, 0.5)
-                .setInteractive({ useHandCursor: true })
-                .on('pointerover', () => this.showMessage(msg))
-                .on('pointerdown', onDown);
-        };
-
-        createInteractable(this.w * 0.52, this.h * 0.15, '🎵 phonograph', 'It plays a waltz.', () => this.showMessage('Silence.'));
-        createInteractable(this.w * 0.2, this.h * 0.3, '🪞 cracked mirror', 'You look tired.', () => this.showMessage('The reflection flickers.'));
+        this.addInteractable(this.w * 0.52, this.h * 0.15, 'phonograph', () => this.showMessage(this.getInteractableText('phonograph', 'click')));
+        this.addInteractable(this.w * 0.2, this.h * 0.3, 'mirror', () => this.showMessage(this.getInteractableText('mirror', 'click')));
         
         // I trigger a roll to investigate the floorboards.
-        this.addRollTrigger(this.w * 0.6, this.h * 0.45, 'Check floorboards', 14, () => {
-            this.showMessage('You find a tarnished ring wedged between the boards!');
+        this.addRollTrigger(this.w * 0.6, this.h * 0.45, this.getInteractableText('floorboards', 'label'), 14, () => {
+            this.showMessage(this.getInteractableText('floorboards', 'success'));
             this.gainItem('tarnished ring');
         });
 
-        createInteractable(this.w * 0.1, this.h * 0.5, '🎻 broken violin', 'Its strings are snapped.', () => this.showMessage('A sad sight.'));
+        this.addInteractable(this.w * 0.1, this.h * 0.5, 'violin', () => this.showMessage(this.getInteractableText('violin', 'click')));
     }
 }
